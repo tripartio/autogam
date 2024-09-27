@@ -3,7 +3,7 @@ test_that("autogam works on mtcars", {
     autogam(mtcars, 'mpg') |>
       coef() |>
       sum() |>
-      round(3),
-    11.253
+      round(1),  # rounding needed for consistency across testing platforms
+    11.3
   )
 })
