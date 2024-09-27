@@ -4,12 +4,14 @@
 \alias{autogam}
 \title{Automate the creation of a Generalized Additive Model (GAM)}
 \usage{
-autogam(data, y_col)
+autogam(data, y_col, ...)
 }
 \arguments{
 \item{data}{dataframe. All the variables in \code{data} will be used to predict \code{y_col}. To exclude any variables, assign as \code{data} only the subset of variables desired.}
 
 \item{y_col}{character(1). Name of the y outcome variable.}
+
+\item{...}{Arguments passed on to \code{\link[mgcv:gam]{mgcv::gam()}}.}
 }
 \value{
 Returns an \code{mgcv::gam} object, the result of predicting \code{y_col} from all other variables in \code{data}.
