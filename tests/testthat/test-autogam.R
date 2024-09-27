@@ -1,6 +1,8 @@
 test_that("autogam works on mtcars", {
-  # There seems to be a BLAS issue on some online testing platforms
+  # There seems to be inconsistencies in results on some online testing platforms.
+  # Perhaps a BLAS issue?
   skip_on_ci()
+  skip_on_cran()
 
   expect_equal(
     autogam(mtcars, 'mpg') |>
