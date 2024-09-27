@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/autogam)](https://CRAN.R-project.org/package=autogam)
+[![R-CMD-check](https://github.com/tripartio/autogam/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tripartio/autogam/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 AutoGAM is a wrapper package for `mgcv` that makes it easier to create high-performing Generalized Additive Models (GAMs). With its central function `autogam()`, by entering just a dataset and the name of the outcome column as inputs, AutoGAM tries to automate as much as possible the procedure of configuring a highly accurate GAM at reasonably high speed, even for large datasets.

@@ -18,5 +18,5 @@ Imports:
     purrr,
     stats,
     stringr
-URL: https://github.com/tripartio/autogam
+URL: https://github.com/tripartio/autogam, https://tripartio.github.io/autogam/
 BugReports: https://github.com/tripartio/autogam/issues
