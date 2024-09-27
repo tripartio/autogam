@@ -1,10 +1,10 @@
 Package: autogam
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Automate the Creation of Generalized Additive Models (GAMs)
+Version: 0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Chitu", "Okoli", , "Chitu.Okoli@skema.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "https://orcid.org/0000-0001-5574-7572"))
+Description: This is a wrapper package for `mgcv` that makes it easier to create high-performing Generalized Additive Models (GAMs). With its central function autogam, by entering just a dataset and the name of the outcome column as inputs, AutoGAM tries to automate as much as possible the procedure of configuring a highly accurate GAM at reasonably high speed, even for large datasets.
 License: MIT + file LICENSE
 Suggests: 
     testthat (>= 3.0.0)
@@ -12,3 +12,9 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports: 
+    dplyr,
+    mgcv,
+    purrr,
+    stats,
+    stringr

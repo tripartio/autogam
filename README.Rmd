@@ -20,37 +20,27 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/autogam)](https://CRAN.R-project.org/package=autogam)
 <!-- badges: end -->
 
-The goal of autogam is to ...
+AutoGAM is a wrapper package for `mgcv` that makes it easier to create high-performing Generalized Additive Models (GAMs). With its central function `autogam()`, by entering just a dataset and the name of the outcome column as inputs, AutoGAM tries to automate as much as possible the procedure of configuring a highly accurate GAM at reasonably high speed, even for large datasets.
 
 ## Installation
 
 You can install the development version of autogam like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages("devtools")
+devtools::install_github("tripartio/autogam")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Here's a simple example using the `mtcars` dataset to predict `mpg`:
 
 ```{r example}
 library(autogam)
-## basic example code
+
+ag <- autogam(mtcars, 'mpg')
+
+summary(ag)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
