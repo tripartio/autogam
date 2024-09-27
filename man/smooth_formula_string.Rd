@@ -24,9 +24,9 @@ Create a character string that wraps appropriate variables in a dataframe with \
 \item Non-numeric: no smoothing.
 \item Numeric: determine knots based on the number of unique values for that variable:
 \itemize{
-\item ⩽ 4: no smoothing
-\item 5 to 19 (inclusive): smooth function with knots equal to the floored half of the number of unique values. E.g., 6 unique values receive 3 knots, 7 will receive 3 knots, and 8 will receive 4 knots.
-\item ⩾ 20: smooth function with no specified number of knots, allowing the \code{gam()} function to detect the appropriate number.
+\item \verb{<= 4}: no smoothing
+\item \verb{5 to 19} (inclusive): smooth function with knots equal to the floored half of the number of unique values. E.g., 6 unique values receive 3 knots, 7 will receive 3 knots, and 8 will receive 4 knots.
+\item \verb{>= 20}: smooth function with no specified number of knots, allowing the \code{gam()} function to detect the appropriate number.
 }
 }
 }

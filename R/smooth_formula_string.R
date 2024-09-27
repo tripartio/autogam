@@ -3,9 +3,9 @@
 #' Create a character string that wraps appropriate variables in a dataframe with `s()` smooth functions. Based on the datatype of each variable, it determines whether it is a numeric variable to be smoothed:
 #' * Non-numeric: no smoothing.
 #' * Numeric: determine knots based on the number of unique values for that variable:
-#'     * ⩽ 4: no smoothing
-#'     * 5 to 19 (inclusive): smooth function with knots equal to the floored half of the number of unique values. E.g., 6 unique values receive 3 knots, 7 will receive 3 knots, and 8 will receive 4 knots.
-#'     * ⩾ 20: smooth function with no specified number of knots, allowing the `gam()` function to detect the appropriate number.
+#'     * `<= 4`: no smoothing
+#'     * `5 to 19` (inclusive): smooth function with knots equal to the floored half of the number of unique values. E.g., 6 unique values receive 3 knots, 7 will receive 3 knots, and 8 will receive 4 knots.
+#'     * `>= 20`: smooth function with no specified number of knots, allowing the `gam()` function to detect the appropriate number.
 #'
 # TODO: In the end, rearrange terms in the order they occur in col_names regardless of their numeric status. This only applies if expand_parametric==TRUE.
 #'
@@ -52,7 +52,7 @@ smooth_formula_string <- function(
       num_unique <- data[[.col]] |> unique() |> length()
 
       # For <20 unique values, do not attempt more than half of that knots or else chances of failure are higher (e.g., if the analysis bootstraps or otherwise samples the data).
-      # For ⩽ 4 unique values, then don't even attempt smoothing; just leave the values distinct.
+      # For <= 4 unique values, then don't even attempt smoothing; just leave the values distinct.
       term <- case_when(
         num_unique <= 4 ~
           .col,
