@@ -1,6 +1,7 @@
 #' Automate the creation of a Generalized Additive Model (GAM)
 #'
-#' This is a wrapper package for `mgcv` that makes it easier to create high-performing Generalized Additive Models (GAMs). By entering just a dataset and the name of the outcome column as inputs, `autogam()` tries to automate as much as possible the procedure of configuring a highly accurate GAM at reasonably high speed, even for large datasets.
+#' `autogam()` is a wrapper for 'mgcv::gam()' that makes it easier to create high-performing Generalized Additive Models (GAMs). By entering just a dataset and the name of the outcome column as inputs, `autogam()` tries to automate the procedure of configuring a highly accurate GAM which performs at reasonably high speed, even for large datasets.
+#'
 #'
 #' @export
 #'
