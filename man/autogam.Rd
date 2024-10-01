@@ -17,7 +17,7 @@ autogam(data, y_col, ...)
 Returns an \code{mgcv::gam} object, the result of predicting \code{y_col} from all other variables in \code{data}.
 }
 \description{
-This is a wrapper package for \code{mgcv} that makes it easier to create high-performing Generalized Additive Models (GAMs). By entering just a dataset and the name of the outcome column as inputs, \code{autogam()} tries to automate as much as possible the procedure of configuring a highly accurate GAM at reasonably high speed, even for large datasets.
+\code{autogam()} is a wrapper for 'mgcv::gam()' that makes it easier to create high-performing Generalized Additive Models (GAMs). By entering just a dataset and the name of the outcome column as inputs, \code{autogam()} tries to automate the procedure of configuring a highly accurate GAM which performs at reasonably high speed, even for large datasets.
 }
 \examples{
 autogam(mtcars, 'mpg')
