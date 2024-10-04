@@ -4,10 +4,10 @@
 \alias{summary.autogam}
 \title{Summary Method for autogam Objects}
 \usage{
-\method{summary}{autogam}(x, ...)
+\method{summary}{autogam}(object, ...)
 }
 \arguments{
-\item{x}{An object of class \code{autogam}.}
+\item{object}{An object of class \code{autogam}.}
 
 \item{...}{Additional arguments passed to other methods.}
 }

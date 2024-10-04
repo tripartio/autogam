@@ -3,9 +3,8 @@
 \name{autogam generic methods}
 \alias{autogam generic methods}
 \alias{anova.autogam}
-\alias{cooks.distance.autogam}
+\alias{coef.autogam}
 \alias{formula.autogam}
-\alias{influence.autogam}
 \alias{logLik.autogam}
 \alias{model.matrix.autogam}
 \alias{predict.autogam}
@@ -15,11 +14,9 @@
 \usage{
 \method{anova}{autogam}(x, ...)
 
-\method{cooks.distance}{autogam}(x, ...)
+\method{coef}{autogam}(x, ...)
 
 \method{formula}{autogam}(x, ...)
-
-\method{influence}{autogam}(x, ...)
 
 \method{logLik}{autogam}(x, ...)
 
@@ -32,7 +29,7 @@
 \method{vcov}{autogam}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{autogam}.}
+\item{x, model}{An object of class \code{autogam}.}
 
 \item{...}{Additional arguments passed to other methods.}
 }

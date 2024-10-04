@@ -82,7 +82,7 @@ autogam <- function(
 #'
 print.autogam <- function(x, ...) {
   # Call mgcv:::print.gam
-  mgcv:::print.gam(x$gam, ...)
+  mgcv::print.gam(x$gam, ...)
 
   # Print basic performance measures
   if (x$params$y_type == 'numeric') {
@@ -117,7 +117,7 @@ print.autogam <- function(x, ...) {
 #' @method plot autogam
 #'
 plot.autogam <- function(x, ...) {
-  mgcv:::plot.gam(x$gam, ...)
+  mgcv::plot.gam(x$gam, ...)
 }
 
 
@@ -125,14 +125,14 @@ plot.autogam <- function(x, ...) {
 #'
 #' This function returns a summary of an `autogam` object. It calls the `mgcv::gam` object [mgcv::summary.gam()] method.
 #'
-#' @param x An object of class \code{autogam}.
+#' @param object An object of class \code{autogam}.
 #' @param ... Additional arguments passed to other methods.
 #' @return Same return object as [mgcv::summary.gam()].
 #' @export
 #' @method summary autogam
 #'
-summary.autogam <- function(x, ...) {
-  mgcv:::summary.gam(x$gam, ...)
+summary.autogam <- function(object, ...) {
+  mgcv::summary.gam(object$gam, ...)
 }
 
 
@@ -148,46 +148,54 @@ summary.autogam <- function(x, ...) {
 #' @name autogam generic methods
 #' @rdname generic-method
 #'
-#' @param x An object of class \code{autogam}.
+#' @param x,model An object of class \code{autogam}.
 #' @param ... Additional arguments passed to other methods.
 #' @return Returns the return object of the corresponding `mgcv::gam` method.
 #' @export
 #' @method anova autogam
 #'
 anova.autogam <- function(x, ...) {
-  mgcv:::anova.gam(x$gam, ...)
+  mgcv::anova.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
-#' @method cooks.distance autogam
-cooks.distance.autogam <- function(x, ...) {
-  mgcv:::cooks.distance.gam(x$gam, ...)
+#' @method coef autogam
+coef.autogam <- function(x, ...) {
+  stats::coef(x$gam, ...)
 }
+
+
+#' #' @rdname generic-method
+#' #' @export
+#' #' @method cooks.distance autogam
+#' cooks.distance.autogam <- function(model, ...) {
+#'   mgcv:::cooks.distance.gam(model$gam, ...)
+#' }
 
 
 #' @rdname generic-method
 #' @export
 #' @method formula autogam
 formula.autogam <- function(x, ...) {
-  mgcv:::formula.gam(x$gam, ...)
+  mgcv::formula.gam(x$gam, ...)
 }
 
 
-#' @rdname generic-method
-#' @export
-#' @method influence autogam
-influence.autogam <- function(x, ...) {
-  mgcv:::influence.gam(x$gam, ...)
-}
+#' #' @rdname generic-method
+#' #' @export
+#' #' @method influence autogam
+#' influence.autogam <- function(model, ...) {
+#'   mgcv::influence.gam(model$gam, ...)
+#' }
 
 
 #' @rdname generic-method
 #' @export
 #' @method logLik autogam
 logLik.autogam <- function(x, ...) {
-  mgcv:::logLik.gam(x$gam, ...)
+  mgcv::logLik.gam(x$gam, ...)
 }
 
 
@@ -195,7 +203,7 @@ logLik.autogam <- function(x, ...) {
 #' @export
 #' @method model.matrix autogam
 model.matrix.autogam <- function(x, ...) {
-  mgcv:::model.matrix.gam(x$gam, ...)
+  mgcv::model.matrix.gam(x$gam, ...)
 }
 
 
@@ -203,7 +211,7 @@ model.matrix.autogam <- function(x, ...) {
 #' @export
 #' @method predict autogam
 predict.autogam <- function(x, ...) {
-  mgcv:::predict.gam(x$gam, ...)
+  mgcv::predict.gam(x$gam, ...)
 }
 
 
@@ -211,7 +219,7 @@ predict.autogam <- function(x, ...) {
 #' @export
 #' @method residuals autogam
 residuals.autogam <- function(x, ...) {
-  mgcv:::residuals.gam(x$gam, ...)
+  mgcv::residuals.gam(x$gam, ...)
 }
 
 
@@ -219,6 +227,6 @@ residuals.autogam <- function(x, ...) {
 #' @export
 #' @method vcov autogam
 vcov.autogam <- function(x, ...) {
-  mgcv:::vcov.gam(x$gam, ...)
+  mgcv::vcov.gam(x$gam, ...)
 }
 
