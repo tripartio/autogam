@@ -167,12 +167,15 @@ coef.autogam <- function(x, ...) {
 }
 
 
-#' #' @rdname generic-method
-#' #' @export
-#' #' @method cooks.distance autogam
-#' cooks.distance.autogam <- function(model, ...) {
-#'   mgcv:::cooks.distance.gam(model$gam, ...)
-#' }
+#' @rdname generic-method
+# # I don't know why CHECK bugs out if this method is exported; it works otherwise
+# @export
+#' @method cooks.distance autogam
+cooks.distance.autogam <- function(model, ...) {
+  stats::cooks.distance(model$gam, ...)
+  # For some reason this only works when called from stats, not mgcv
+  # mgcv:::cooks.distance.gam(model$gam, ...)
+}
 
 
 #' @rdname generic-method
@@ -183,12 +186,13 @@ formula.autogam <- function(x, ...) {
 }
 
 
-#' #' @rdname generic-method
-#' #' @export
-#' #' @method influence autogam
-#' influence.autogam <- function(model, ...) {
-#'   mgcv::influence.gam(model$gam, ...)
-#' }
+#' @rdname generic-method
+# # I don't know why CHECK bugs out if this method is exported; it works otherwise
+# @export
+#' @method influence autogam
+influence.autogam <- function(model, ...) {
+  mgcv::influence.gam(model$gam, ...)
+}
 
 
 #' @rdname generic-method

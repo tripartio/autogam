@@ -4,7 +4,9 @@
 \alias{autogam generic methods}
 \alias{anova.autogam}
 \alias{coef.autogam}
+\alias{cooks.distance.autogam}
 \alias{formula.autogam}
+\alias{influence.autogam}
 \alias{logLik.autogam}
 \alias{model.matrix.autogam}
 \alias{predict.autogam}
@@ -16,7 +18,11 @@
 
 \method{coef}{autogam}(x, ...)
 
+\method{cooks.distance}{autogam}(model, ...)
+
 \method{formula}{autogam}(x, ...)
+
+\method{influence}{autogam}(model, ...)
 
 \method{logLik}{autogam}(x, ...)
 
