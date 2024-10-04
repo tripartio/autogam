@@ -1,6 +1,6 @@
 Package: autogam
 Title: Automate the Creation of Generalized Additive Models (GAMs)
-Version: 0.0.1
+Version: 0.0.1.20241004
 Authors@R: 
     person("Chitu", "Okoli", , "Chitu.Okoli@skema.edu", role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0000-0001-5574-7572"))
