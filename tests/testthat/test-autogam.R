@@ -12,3 +12,16 @@ test_that("autogam works on mtcars", {
     11.3
   )
 })
+
+
+# gmt <- gam(mpg ~ cyl + s(disp, bs = "cr") + s(hp, bs = "cr") + s(drat, bs = "cr") +
+#              s(wt, bs = "cr") + s(qsec, bs = "cr") + vs + am + gear +
+#              s(carb, k = 3, bs = "cr"),
+#            data = mtcars)
+# agmt <- autogam(mtcars, 'mpg')
+#
+# summary(gmt)
+# summary(agmt)
+#
+# sa_wmae_mad(mtcars$mpg, predict(gmt))
+# sa_wmae_mad(mtcars$mpg, predict(agmt, type = 'response'))

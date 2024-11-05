@@ -22,6 +22,7 @@ Imports:
     rlang,
     staccuracy,
     stats,
-    stringr
+    stringr,
+    univariateML
 URL: https://github.com/tripartio/autogam, https://tripartio.github.io/autogam/
 BugReports: https://github.com/tripartio/autogam/issues
