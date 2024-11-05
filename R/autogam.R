@@ -11,6 +11,7 @@
 #' @param data dataframe. All the variables in `data` will be used to predict `y_col`. To exclude any variables, assign as `data` only the subset of variables desired.
 #' @param y_col character(1). Name of the y outcome variable.
 #' @param ... Arguments passed on to [mgcv::gam()].
+#' @param bs character(1). The default basis function for GAM smooths. See `?mgcv::smooth.terms` for details. Whereas the default `bs` in `mgcv` is 'tp', `autogam`'s default is 'cr', which is much faster and comparably accurate.
 #'
 #' @returns Returns an `mgcv::gam` object, the result of predicting `y_col` from all other variables in `data`.
 #'

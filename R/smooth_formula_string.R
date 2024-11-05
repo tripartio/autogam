@@ -14,6 +14,7 @@
 #' @param data dataframe. All the variables in `data` except `y_col` will be listed in the resulting formula string. To exclude any variables, assign as `data` only the subset of variables desired.
 #' @param y_col character(1). Name of the y outcome variable.
 #' @param smooth_fun character(1). Function to use for smooth wraps; default is 's' for the `s()` function.
+#' @param bs See documentation for [autogam()]
 #' @param expand_parametric logical(1). If `TRUE` (default), explicitly list each non-smooth (parametric) term. If `FALSE`, use `.` to lump together all non-smooth terms.
 #'
 #' @returns Returns a single character string that represents a formula with `y_col` on the left and all other variables in `data` on the right, each formatted with an appropriate `s()` function when applicable.
@@ -28,6 +29,7 @@ smooth_formula_string <- function(
   data,
   y_col,
   smooth_fun = 's',
+  bs = 'cr',
   expand_parametric = TRUE
 ) {
   col_names <- names(data)
@@ -89,6 +91,14 @@ smooth_formula_string <- function(
       ''
     )
   )
+
+  if (bs != 'tp') {
+    formula_str <- stringr::str_replace_all(
+      formula_str,
+      pattern = "s\\(([^)]*)\\)",
+      replacement = paste0("s(\\1,bs='", bs, "')")
+    )
+  }
 
   return(formula_str)
 }

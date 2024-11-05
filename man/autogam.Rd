@@ -4,7 +4,7 @@
 \alias{autogam}
 \title{Automate the creation of a Generalized Additive Model (GAM)}
 \usage{
-autogam(data, y_col, ...)
+autogam(data, y_col, ..., bs = "cr")
 }
 \arguments{
 \item{data}{dataframe. All the variables in \code{data} will be used to predict \code{y_col}. To exclude any variables, assign as \code{data} only the subset of variables desired.}
@@ -12,6 +12,8 @@ autogam(data, y_col, ...)
 \item{y_col}{character(1). Name of the y outcome variable.}
 
 \item{...}{Arguments passed on to \code{\link[mgcv:gam]{mgcv::gam()}}.}
+
+\item{bs}{character(1). The default basis function for GAM smooths. See \code{?mgcv::smooth.terms} for details. Whereas the default \code{bs} in \code{mgcv} is 'tp', \code{autogam}'s default is 'cr', which is much faster and comparably accurate.}
 }
 \value{
 Returns an \code{mgcv::gam} object, the result of predicting \code{y_col} from all other variables in \code{data}.

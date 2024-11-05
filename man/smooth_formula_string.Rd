@@ -4,7 +4,13 @@
 \alias{smooth_formula_string}
 \title{Create a character string for a mgcv::gam formula}
 \usage{
-smooth_formula_string(data, y_col, smooth_fun = "s", expand_parametric = TRUE)
+smooth_formula_string(
+  data,
+  y_col,
+  smooth_fun = "s",
+  bs = "cr",
+  expand_parametric = TRUE
+)
 }
 \arguments{
 \item{data}{dataframe. All the variables in \code{data} except \code{y_col} will be listed in the resulting formula string. To exclude any variables, assign as \code{data} only the subset of variables desired.}
@@ -12,6 +18,8 @@ smooth_formula_string(data, y_col, smooth_fun = "s", expand_parametric = TRUE)
 \item{y_col}{character(1). Name of the y outcome variable.}
 
 \item{smooth_fun}{character(1). Function to use for smooth wraps; default is 's' for the \code{s()} function.}
+
+\item{bs}{See documentation for \code{\link[=autogam]{autogam()}}}
 
 \item{expand_parametric}{logical(1). If \code{TRUE} (default), explicitly list each non-smooth (parametric) term. If \code{FALSE}, use \code{.} to lump together all non-smooth terms.}
 }
