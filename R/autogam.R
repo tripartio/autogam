@@ -36,7 +36,7 @@ autogam <- function(
   ## Populate args for the mgcv::gam call ----------------------
   args <- list(...)
   y_vals <- data[[y_col]]
-  y_type <- staccuracy::var_type(y_vals)
+  y_type <- var_type(y_vals)
 
   # Explicitly assign data to the arguments list. Note that data cannot be overridden because it is a named input to autogam()
   args$data <- data
@@ -69,6 +69,9 @@ autogam <- function(
 
   ## Choose gam or bam ----------------------
 
+  # Default to bam
+  gam_fun <- bam
+  args$discrete <- TRUE
 
   ## Detect interactions ---------------------------
 
@@ -97,7 +100,7 @@ autogam <- function(
 
   if (!is.null(args$family)) {
     # The user specified the family to fit
-    ag$gam <- do.call(gam, args)
+    ag$gam <- do.call(gam_fun, args)
   }
   else {
     # Try the auto-detected best distribution fits
@@ -114,7 +117,7 @@ autogam <- function(
             (`[[`)(it.yd_model)
 
           cli_inform('Fitting GAM with {.var {it.yd_model}} distribution...')
-          ag$gam <- do.call(gam, args)
+          ag$gam <- do.call(gam_fun, args)
 
           y_dist <- it.yd_model
 
