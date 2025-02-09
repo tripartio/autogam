@@ -24,13 +24,13 @@ validate <- function(..., msg = NULL)
 
     # Validate the assertion itself--this is purely internal validation
     if (length(res) != 1) {
-      cli_abort('ale:::validate: length of assertion is not 1')
+      cli_abort('length of assertion is not 1')
     }
     if (!is.logical(res)) {
-      cli_abort('ale:::validate: assertion must return a logical value')
+      cli_abort('assertion must return a logical value')
     }
     if (any(is.na(res))) {
-      cli_abort('ale:::validate: missing values present in assertion')
+      cli_abort('missing values present in assertion')
     }
 
     # On the first FALSE res, break out of the for loop
