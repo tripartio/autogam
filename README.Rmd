@@ -39,9 +39,7 @@ Here's a simple example using the `mtcars` dataset to predict `mpg`:
 ```{r example}
 library(autogam)
 
-ag <- autogam(mtcars, 'mpg')
-
-summary(ag)
+autogam(mtcars, 'mpg')
 ```
 
 

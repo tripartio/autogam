@@ -35,38 +35,25 @@ Here’s a simple example using the `mtcars` dataset to predict `mpg`:
 ``` r
 library(autogam)
 
-ag <- autogam(mtcars, 'mpg')
-
-summary(ag)
+autogam(mtcars, 'mpg')
+#> Detecting distribution of `mpg`...
+#> Loading required package: intervals
+#> 
+#> Fitting GAM with `Inverse Gaussian` distribution...
+#> ✔ GAM successfully fit with 86.1% standardized accuracy.
 #> 
 #> Family: gaussian 
-#> Link function: identity 
+#> Link function: inverse 
 #> 
 #> Formula:
-#> mpg ~ cyl + s(disp) + s(hp) + s(drat) + s(wt) + s(qsec) + vs + 
-#>     am + gear + s(carb, k = 3)
+#> mpg ~ cyl + s(disp, bs = "cr") + s(hp, bs = "cr") + s(drat, bs = "cr") + 
+#>     s(wt, bs = "cr") + s(qsec, bs = "cr") + vs + am + gear + 
+#>     s(carb, k = 3, bs = "cr")
 #> 
-#> Parametric coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)  
-#> (Intercept)   7.3453     5.3267   1.379   0.2671  
-#> cyl           0.5814     0.5264   1.104   0.3547  
-#> vs           10.3131     1.7012   6.062   0.0107 *
-#> am            4.9605     0.8490   5.842   0.0118 *
-#> gear          0.7107     0.7857   0.905   0.4362  
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Estimated degrees of freedom:
+#> 1.00 1.00 1.00 1.00 1.37 1.00  total = 11.37 
 #> 
-#> Approximate significance of smooth terms:
-#>           edf Ref.df      F p-value   
-#> s(disp) 1.000  1.000  4.984  0.1117   
-#> s(hp)   8.739  8.868 17.975  0.0170 * 
-#> s(drat) 1.987  2.220 16.275  0.0395 * 
-#> s(wt)   1.764  2.083  2.669  0.1891   
-#> s(qsec) 8.904  8.970 28.950  0.0089 **
-#> s(carb) 1.785  1.876  1.382  0.4412   
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> fREML score: 114.8354     
 #> 
-#> R-sq.(adj) =  0.996   Deviance explained =  100%
-#> GCV = 1.7279  Scale est. = 0.1523    n = 32
+#> MAE: 1.307; Std. accuracy: 86.1%
 ```
