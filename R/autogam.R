@@ -72,6 +72,7 @@ autogam <- function(
   # Default to bam
   gam_fun <- bam
   args$discrete <- TRUE
+  args$method <- 'fREML'
 
   ## Detect interactions ---------------------------
 
