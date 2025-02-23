@@ -16,6 +16,7 @@ Depends:
 Imports: 
     cli,
     dplyr,
+    methods,
     mgcv,
     purrr,
     rlang,
