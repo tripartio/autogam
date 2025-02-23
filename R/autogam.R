@@ -309,22 +309,22 @@ summary.autogam <- function(object, ...) {
 #' @name autogam generic methods
 #' @rdname generic-method
 #'
-#' @param x,model An object of class \code{autogam}.
+#' @param object,model An object of class \code{autogam}.
 #' @param ... Additional arguments passed to other methods.
 #' @return Returns the return object of the corresponding `mgcv::gam` method.
 #' @export
 #' @method anova autogam
 #'
-anova.autogam <- function(x, ...) {
-  mgcv::anova.gam(x$gam, ...)
+anova.autogam <- function(object, ...) {
+  mgcv::anova.gam(object$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method coef autogam
-coef.autogam <- function(x, ...) {
-  stats::coef(x$gam, ...)
+coef.autogam <- function(object, ...) {
+  stats::coef(object$gam, ...)
 }
 
 
@@ -339,6 +339,10 @@ cooks.distance.autogam <- function(model, ...) {
 
 
 #' @rdname generic-method
+#'
+#' @param x formula
+#' @param ... other arguments
+#'
 #' @export
 #' @method formula autogam
 formula.autogam <- function(x, ...) {
@@ -358,39 +362,39 @@ influence.autogam <- function(model, ...) {
 #' @rdname generic-method
 #' @export
 #' @method logLik autogam
-logLik.autogam <- function(x, ...) {
-  mgcv::logLik.gam(x$gam, ...)
+logLik.autogam <- function(object, ...) {
+  mgcv::logLik.gam(object$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method model.matrix autogam
-model.matrix.autogam <- function(x, ...) {
-  mgcv::model.matrix.gam(x$gam, ...)
+model.matrix.autogam <- function(object, ...) {
+  mgcv::model.matrix.gam(object$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method predict autogam
-predict.autogam <- function(x, ...) {
-  mgcv::predict.gam(x$gam, ...)
+predict.autogam <- function(object, ...) {
+  mgcv::predict.gam(object$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method residuals autogam
-residuals.autogam <- function(x, ...) {
-  mgcv::residuals.gam(x$gam, ...)
+residuals.autogam <- function(object, ...) {
+  mgcv::residuals.gam(object$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method vcov autogam
-vcov.autogam <- function(x, ...) {
-  mgcv::vcov.gam(x$gam, ...)
+vcov.autogam <- function(object, ...) {
+  mgcv::vcov.gam(object$gam, ...)
 }
 
