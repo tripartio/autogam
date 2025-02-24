@@ -71,7 +71,24 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">autogam</span><span class="op">(</span><span class="va">mtcars</span>, <span class="st">'mpg'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Detecting distribution of `mpg`...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in y_dists$univariateML:</span> $ operator is invalid for atomic vectors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> GAM successfully fit with 90.6% standardized accuracy.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: gaussian </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Link function: identity </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ cyl + s(disp, bs = "cr") + s(hp, bs = "cr") + s(drat, bs = "cr") + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     s(wt, bs = "cr") + s(qsec, bs = "cr") + vs + am + gear + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     s(carb, k = 3, bs = "cr")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimated degrees of freedom:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5.45 1.00 1.79 1.00 1.00 1.00  total = 16.24 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fREML score: 49.8224     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAE: 0.883; Std. accuracy: 90.6%</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
