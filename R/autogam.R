@@ -138,14 +138,21 @@ autogam <- function(
 
 
   # Calculate performance measures ---------------------
-  ag$perf <- list(
-    mae         = mae(y_vals, ag$gam$fitted.values),
-    win_mae     = win_mae(y_vals, ag$gam$fitted.values),
-    sa_wmae_mad = sa_wmae_mad(y_vals, ag$gam$fitted.values),
-    rmse        = rmse(y_vals, ag$gam$fitted.values),
-    win_rmse    = win_rmse(y_vals, ag$gam$fitted.values),
-    sa_wrmse_sd = sa_wrmse_sd(y_vals, ag$gam$fitted.values)
-  )
+  ag$perf <- if (y_type == 'numeric') {
+    list(
+      mae         = mae(y_vals, ag$gam$fitted.values),
+      win_mae     = win_mae(y_vals, ag$gam$fitted.values),
+      sa_wmae_mad = sa_wmae_mad(y_vals, ag$gam$fitted.values),
+      rmse        = rmse(y_vals, ag$gam$fitted.values),
+      win_rmse    = win_rmse(y_vals, ag$gam$fitted.values),
+      sa_wrmse_sd = sa_wrmse_sd(y_vals, ag$gam$fitted.values)
+    )
+  }
+  else if (y_type == 'binary') {
+    list(
+      auc = aucroc(y_vals, ag$gam$fitted.values)$auc
+    )
+  }
 
   # Print success message. Important because possible warnings might obscure the main point.
   cat('\n')
