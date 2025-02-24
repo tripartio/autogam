@@ -32,7 +32,6 @@ autogam <- function(
   ## Validate arguments -----------------------
   # Only directly validate autogam() arguments; mgcv::gam will validate ... arguments
 
-
   ## Populate args for the mgcv::gam call ----------------------
   args <- list(...)
   y_vals <- data[[y_col]]
@@ -97,7 +96,7 @@ autogam <- function(
   class(ag) <- c('autogam')
   attr(ag, 'autogam_version') <- utils::packageVersion('autogam')
 
-  if (!is.null(args$family) || inherits(y_dists, 'tbl_df')) {
+  if (!is.null(args$family) || !inherits(y_dists, 'tbl_df')) {
     # if (!is.null(args$family)) {
     # The user specified the family to fit
     ag$gam <- do.call(gam_fun, args)
