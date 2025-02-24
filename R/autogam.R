@@ -51,6 +51,10 @@ autogam <- function(
 
   ## Determine y_col distribution -----------------------
 
+  # Initialize distribution for final params
+  y_dist <- NULL   # single final distribution used
+  y_dists <- NULL  # possible distributions
+
   if (is.null(args$family)) {
     cli_inform('Detecting distribution of {.var {y_col}}...')
     y_dists <- univariateML::model_select(
@@ -59,12 +63,6 @@ autogam <- function(
       return = 'all'
     )
   }
-  else {
-    y_dists <- NULL  # needed for final params
-  }
-
-
-
 
 
   ## Choose gam or bam ----------------------
@@ -99,7 +97,8 @@ autogam <- function(
   class(ag) <- c('autogam')
   attr(ag, 'autogam_version') <- utils::packageVersion('autogam')
 
-  if (!is.null(args$family)) {
+  if (!is.null(args$family) || inherits(y_dists, 'tbl_df')) {
+    # if (!is.null(args$family)) {
     # The user specified the family to fit
     ag$gam <- do.call(gam_fun, args)
   }
