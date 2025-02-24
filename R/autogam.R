@@ -12,6 +12,8 @@
 #' @param y_col character(1). Name of the y outcome variable.
 #' @param ... Arguments passed on to [mgcv::gam()].
 #' @param bs character(1). The default basis function for GAM smooths. See `?mgcv::smooth.terms` for details. Whereas the default `bs` in `mgcv` is 'tp', `autogam`'s default is 'cr', which is much faster and comparably accurate.
+#' @param binary_true_value any single atomic value. The value of `actual` that is considered `TRUE`; any other value of `actual` is considered `FALSE`. For example, if `2` means `TRUE` and `1` means `FALSE`, then set `binary_true_value = 2`.
+# @param ale,ale_options logical(1),list. If `ale` is TRUE, the returned autogam object includes accumulated local effects (ALE) results from `ale::ale()`. By default (if `ale_options = NULL`), the `x_cols` argument for `ale::ale()` will be set to all predictor terms and interactions used in the formula that `autogam()` creates. `ale_options` is a named list of arguments passed to `ale::ale()`. `x_cols` can be specified there to override the default `autogam()` setting.
 #'
 #' @returns Returns an `mgcv::gam` object, the result of predicting `y_col` from all other variables in `data`.
 #'
@@ -25,22 +27,60 @@ autogam <- function(
   data,
   y_col,
   ...,
-  bs = 'cr'
+  # ale,
+  # ale_options,
+  bs = 'cr',
+  binary_true_value = NULL
 ) {
   # Preliminaries ---------------
 
   ## Validate arguments -----------------------
   # Only directly validate autogam() arguments; mgcv::gam will validate ... arguments
 
+  # Validate the dataset
+  validate(data |> inherits('data.frame'))
+  validate(
+    !any(is.na(data)),
+    msg = '{.arg data} must not have any missing values.'
+  )
+
+
+
+  # Validate inputs
+  validate(is.null(binary_true_value) || rlang::is_scalar_atomic(binary_true_value))
+
+
   ## Populate args for the mgcv::gam call ----------------------
   args <- list(...)
   y_vals <- data[[y_col]]
   y_type <- var_type(y_vals)
 
+  if (y_type %notin% c('numeric', 'binary')) {
+    cli_abort('For now, only numeric and binary y outcomes are supported.')
+  }
+
+  if (y_type == 'binary') {
+    if (!is.null(binary_true_value)) {
+      # If binary_true_value is provided, then it overrides any other values of y_vals
+      y_vals <- y_vals == binary_true_value
+    }
+    else {
+      # Coerce actual to binary using the standard as.logical() rules
+      y_vals <- as.logical(y_vals)
+      if (sum(is.na(y_vals)) > 0) {
+        cli_abort('Some "{y_col}" values are not valid binary values.')
+      }
+    }
+
+  }
+
+
+
+
   # Explicitly assign data to the arguments list. Note that data cannot be overridden because it is a named input to autogam()
   args$data <- data
 
-  # Use REML as the default method
+  # Use REML as the default method; it's a bit slower but often more accurate
   if (is.null(args$method)) {
     args$method <- 'REML'
   }
@@ -50,25 +90,51 @@ autogam <- function(
 
   ## Determine y_col distribution -----------------------
 
-  # Initialize distribution for final params
-  y_dist <- NULL   # single final distribution used
-  y_dists <- NULL  # possible distributions
-
+  y_dists <- NULL  # needed for final params
   if (is.null(args$family)) {
     cli_inform('Detecting distribution of {.var {y_col}}...')
-    y_dists <- univariateML::model_select(
-      y_vals,
-      models = uml_models[[y_type]],
-      return = 'all'
+
+    # Coerce y_vals to a numeric type to determine its distribution.
+    num_y_vals <- if (y_type == 'numeric') {
+      y_vals
+    }
+    else if (y_type == 'binary') {
+      if (!(is.numeric(y_vals))) {
+      # if (!(is.numeric(y_vals) || is.logical(y_vals))) {
+          # Coerce y_vals to a numeric binary format
+        y_vals_factor <- factor(y_vals)
+        y_vals_levels <- levels(y_vals_factor)
+
+        y_vals_factor |>
+          as.integer() |>  # binary factors become 1 and 2, so...
+          (`-`)(1)  # subtract 1 to convert values to 0 and 1
+      }
+    }
+
+
+    tryCatch(
+      {
+        y_dists <- univariateML::model_select(
+          num_y_vals,
+          models = uml_models[[y_type]],
+          return = 'all'
+        )
+      },
+      error = \(e) {
+        cli_alert_danger(e)
+      }
     )
   }
+
+
+
 
 
   ## Choose gam or bam ----------------------
 
   # Default to bam
   gam_fun <- bam
-  args$discrete <- TRUE
+  # args$discrete <- TRUE
   args$method <- 'fREML'
 
   ## Detect interactions ---------------------------
@@ -96,16 +162,28 @@ autogam <- function(
   class(ag) <- c('autogam')
   attr(ag, 'autogam_version') <- utils::packageVersion('autogam')
 
-  if (!is.null(args$family) || !inherits(y_dists, 'tbl_df')) {
-    # if (!is.null(args$family)) {
+  if (!is.null(args$family)) {
     # The user specified the family to fit
-    ag$gam <- do.call(gam_fun, args)
+    tryCatch(
+      {
+        ag$gam <- do.call(gam_fun, args)
+      },
+      error = \(e) {
+        # Immediately print a warning message
+        cli_alert_warning('Warning: ')
+        print(e)
+        warning(e)
+        # cli_warn(as.character(e))
+      }
+    )
+
+    y_dist <- NULL
   }
   else {
     # Try the auto-detected best distribution fits
 
     # Some family links with mgcv are more unstable than others, so iterate through each from the best fit to the worst until the fit successfully runs.
-    ## But family problems are not the only reasons why the gam call fails. Optimizers are also sometimes a problem. An advanced upgrade will try to detect if the problem is the optimizer and then switcht based on that.
+    ## But family problems are not the only reasons why the gam call fails. Optimizers are also sometimes a problem. An advanced upgrade will try to detect if the problem is the optimizer and then switch based on that.
     ## See https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.convergence.html
     for (it.yd in y_dists$univariateML) {
       tryCatch(
@@ -124,9 +202,10 @@ autogam <- function(
         },
         error = \(e) {
           # Immediately print a warning message
-          cli_alert_warning(as.character(e))
-          # Register a warning in the warning() system; usually printed when everything finishes executing.
-          cli_warn(as.character(e))
+          cli_alert_warning('Warning: ')
+          print(e)
+          warning(e)
+          # cli_warn(as.character(e))
         }
       )
     }
@@ -186,9 +265,9 @@ uml_models <- list(
     'gamma', 'invgamma', 'lgamma',
     # 'std',  # buggy
     # 'llogis',
-    'beta'
+    'beta',
     # # discrete
-    # 'pois'
+    'pois'
   )
 )
 
@@ -314,22 +393,22 @@ summary.autogam <- function(object, ...) {
 #' @name autogam generic methods
 #' @rdname generic-method
 #'
-#' @param object,model An object of class \code{autogam}.
+#' @param x,model An object of class \code{autogam}.
 #' @param ... Additional arguments passed to other methods.
 #' @return Returns the return object of the corresponding `mgcv::gam` method.
 #' @export
 #' @method anova autogam
 #'
-anova.autogam <- function(object, ...) {
-  mgcv::anova.gam(object$gam, ...)
+anova.autogam <- function(x, ...) {
+  mgcv::anova.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method coef autogam
-coef.autogam <- function(object, ...) {
-  stats::coef(object$gam, ...)
+coef.autogam <- function(x, ...) {
+  stats::coef(x$gam, ...)
 }
 
 
@@ -344,10 +423,6 @@ cooks.distance.autogam <- function(model, ...) {
 
 
 #' @rdname generic-method
-#'
-#' @param x formula
-#' @param ... other arguments
-#'
 #' @export
 #' @method formula autogam
 formula.autogam <- function(x, ...) {
@@ -367,39 +442,39 @@ influence.autogam <- function(model, ...) {
 #' @rdname generic-method
 #' @export
 #' @method logLik autogam
-logLik.autogam <- function(object, ...) {
-  mgcv::logLik.gam(object$gam, ...)
+logLik.autogam <- function(x, ...) {
+  mgcv::logLik.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method model.matrix autogam
-model.matrix.autogam <- function(object, ...) {
-  mgcv::model.matrix.gam(object$gam, ...)
+model.matrix.autogam <- function(x, ...) {
+  mgcv::model.matrix.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method predict autogam
-predict.autogam <- function(object, ...) {
-  mgcv::predict.gam(object$gam, ...)
+predict.autogam <- function(x, ...) {
+  mgcv::predict.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method residuals autogam
-residuals.autogam <- function(object, ...) {
-  mgcv::residuals.gam(object$gam, ...)
+residuals.autogam <- function(x, ...) {
+  mgcv::residuals.gam(x$gam, ...)
 }
 
 
 #' @rdname generic-method
 #' @export
 #' @method vcov autogam
-vcov.autogam <- function(object, ...) {
-  mgcv::vcov.gam(object$gam, ...)
+vcov.autogam <- function(x, ...) {
+  mgcv::vcov.gam(x$gam, ...)
 }
 

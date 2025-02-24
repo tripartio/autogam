@@ -1,5 +1,7 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
 
-* Fixed issues at https://cran.r-project.org/web/checks/check_results_autogam.html
+* This is a new release.
+* The reported "possibly misspelled words" are all verified to be valid words.
+* Description revised as requested on original CRAN submission attempt.

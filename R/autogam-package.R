@@ -12,12 +12,14 @@
 #' @import dplyr
 #' @importFrom cli cli_alert_success
 #' @importFrom cli cli_alert_warning
+#' @importFrom cli cli_alert_danger
 #' @importFrom cli cli_abort
 #' @importFrom cli cli_inform
 #' @importFrom cli cli_warn
+#' @importFrom purrr imap
 #' @importFrom purrr map
-#' @importFrom purrr set_names
 #' @importFrom rlang .data
+#' @importFrom rlang set_names
 #'
 '_PACKAGE'
 

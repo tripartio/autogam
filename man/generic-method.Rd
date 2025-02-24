@@ -14,9 +14,9 @@
 \alias{vcov.autogam}
 \title{Generic autogam methods passed on to mgcv::gam methods}
 \usage{
-\method{anova}{autogam}(object, ...)
+\method{anova}{autogam}(x, ...)
 
-\method{coef}{autogam}(object, ...)
+\method{coef}{autogam}(x, ...)
 
 \method{cooks.distance}{autogam}(model, ...)
 
@@ -24,22 +24,20 @@
 
 \method{influence}{autogam}(model, ...)
 
-\method{logLik}{autogam}(object, ...)
+\method{logLik}{autogam}(x, ...)
 
-\method{model.matrix}{autogam}(object, ...)
+\method{model.matrix}{autogam}(x, ...)
 
-\method{predict}{autogam}(object, ...)
+\method{predict}{autogam}(x, ...)
 
-\method{residuals}{autogam}(object, ...)
+\method{residuals}{autogam}(x, ...)
 
-\method{vcov}{autogam}(object, ...)
+\method{vcov}{autogam}(x, ...)
 }
 \arguments{
-\item{object, model}{An object of class \code{autogam}.}
+\item{x, model}{An object of class \code{autogam}.}
 
-\item{...}{other arguments}
-
-\item{x}{formula}
+\item{...}{Additional arguments passed to other methods.}
 }
 \value{
 Returns the return object of the corresponding \code{mgcv::gam} method.
